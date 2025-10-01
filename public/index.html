@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <title>Parcel Tracker</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>📦 Track din pakke</h1>
+    <input type="text" id="parcelId" placeholder="Indtast trackingnummer">
+    <button onclick="trackParcel()">Track</button>
+    <pre id="result"></pre>
+  </div>
+
+  <script>
+    function trackParcel() {
+      const parcelId = document.getElementById('parcelId').value;
+      fetch(`/api/track?parcelId=${parcelId}`)
+        .then(res => res.json())
+        .then(data => {
+          document.getElementById('result').textContent = JSON.stringify(data, null, 2);
+        })
+        .catch(err => {
+          document.getElementById('result').textContent = 'Fejl: ' + err.message;
+        });
+    }
+  </script>
+</body>
+</html>
