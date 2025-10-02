@@ -1,8 +1,14 @@
 const express = require('express');
+const cookieParser = require('cookie-parser');
+const path = require('path');
+const trackerRoutes = require('./routes/tracker');
+
 const app = express();
 const PORT = 3000;
 
-app.use(express.static('public'));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
+app.use('/api', trackerRoutes);
 
 app.get('/api/track', (req, res) => {
   const parcelId = req.query.parcelId;
